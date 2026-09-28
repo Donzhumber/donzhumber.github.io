@@ -3,7 +3,7 @@ locale                   : "en-US"
 title                    : "Humberto Bernal, Ph.D."
 title_separator          : "-"
 name                     : "Humberto Bernal, Ph.D."
-description              : "Academic website and CV of Dr. Humberto Bernal. Associate Professor, Industrial Organization, Mechanism Design, and Regulatory Economics."
+description              : "Academic website of Dr. Humberto Bernal. Economics Researcher and Professor of Applied Microeconomics, Game Theory, and Mechanism Design."
 url                      : "https://donzhumber.github.io" # Change to your domain or GitHub Pages URL
 baseurl                  : "" # the subpath of your site, e.g. /blog/
 
@@ -11,7 +11,7 @@ baseurl                  : "" # the subpath of your site, e.g. /blog/
 author:
   name             : "Humberto Bernal, Ph.D."
   avatar           : "/images/profile.jpg"
-  bio              : "Professor Coordinator & Applied Economics Researcher"
+  bio              : "Economics Researcher and Professor of Applied Microeconomics, Game Theory, and Mechanism Design"
   location         : "Bogotá, Colombia"
   employer         : "Universidad Colegio Mayor de Cundinamarca"
   uri              : "https://y5ss6jtuccvpbdvuy7kdgl.streamlit.app/"
