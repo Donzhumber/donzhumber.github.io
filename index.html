@@ -579,11 +579,11 @@
       margin-left: 0.5rem;
     }
   
-    /* Sidebar Brand / Traditional Colored Buttons */
+    /* Sidebar Links - Clean Minimalist with Colored Brand Icons Only */
     .sidebar-btn-group {
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
+      gap: 0.35rem;
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid var(--border-color);
@@ -592,23 +592,25 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.55rem 0.85rem;
+      padding: 0.45rem 0.65rem;
       border-radius: var(--radius);
-      font-size: 0.88rem;
-      font-weight: 600;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-color) !important;
       text-decoration: none !important;
-      transition: all 0.18s ease;
-      border: 1px solid transparent;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      transition: background-color 0.15s ease, color 0.15s ease;
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      box-shadow: none !important;
     }
     .sidebar-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      background: var(--tag-bg) !important;
+      color: var(--primary-color) !important;
       text-decoration: none !important;
     }
     .sidebar-btn i {
-      font-size: 1.1rem;
-      width: 20px;
+      font-size: 1.15rem;
+      width: 22px;
       text-align: center;
       flex-shrink: 0;
     }
@@ -618,78 +620,14 @@
       text-overflow: ellipsis;
     }
 
-    /* 1. Bogotá, Colombia (Red Pin) */
-    .btn-location {
-      background: #fef2f2;
-      border-color: #fecaca;
-      color: #991b1b !important;
-    }
-    .btn-location i { color: #dc2626; }
-    .btn-location:hover { background: #fee2e2; border-color: #f87171; }
-
-    /* 2. Universidad de los Andes (Oro y Negro UniAndes) */
-    .btn-uniandes {
-      background: #fffbeb;
-      border-color: #fde68a;
-      color: #78350f !important;
-    }
-    .btn-uniandes i { color: #d97706; }
-    .btn-uniandes:hover { background: #fef3c7; border-color: #fcd34d; }
-
-    /* 3. Gmail (Google Red) */
-    .btn-gmail {
-      background: #fff1f2;
-      border-color: #fecdd3;
-      color: #9f1239 !important;
-    }
-    .btn-gmail i { color: #ea4335; }
-    .btn-gmail:hover { background: #ffe4e6; border-color: #fda4af; }
-
-    /* 4. WhatsApp / Phone (Verde WhatsApp) */
-    .btn-whatsapp {
-      background: #f0fdf4;
-      border-color: #bbf7d0;
-      color: #166534 !important;
-    }
-    .btn-whatsapp i { color: #25d366; }
-    .btn-whatsapp:hover { background: #dcfce7; border-color: #86efac; }
-
-    /* 5. LinkedIn (Azul LinkedIn) */
-    .btn-linkedin {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #1e40af !important;
-    }
-    .btn-linkedin i { color: #0a66c2; }
-    .btn-linkedin:hover { background: #dbeafe; border-color: #60a5fa; }
-
-    /* 6. ORCID (Verde Oficial ORCID) */
-    .btn-orcid {
-      background: #f7fee7;
-      border-color: #d9f99d;
-      color: #3f6212 !important;
-    }
-    .btn-orcid i { color: #a6ce39; }
-    .btn-orcid:hover { background: #ecfccb; border-color: #bef264; }
-
-    /* 7. Streamlit (Rojo Coral Streamlit) */
-    .btn-streamlit {
-      background: #fff5f5;
-      border-color: #fed7d7;
-      color: #9b2c2c !important;
-    }
-    .btn-streamlit i { color: #ff4b4b; }
-    .btn-streamlit:hover { background: #fed7d7; border-color: #feb2b2; }
-
-    /* Dark Mode Variants */
-    [data-theme="dark"] .btn-location { background: rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.35); color: #fca5a5 !important; }
-    [data-theme="dark"] .btn-uniandes { background: rgba(217, 119, 6, 0.15); border-color: rgba(217, 119, 6, 0.35); color: #fde68a !important; }
-    [data-theme="dark"] .btn-gmail { background: rgba(234, 67, 53, 0.15); border-color: rgba(234, 67, 53, 0.35); color: #fda4af !important; }
-    [data-theme="dark"] .btn-whatsapp { background: rgba(37, 211, 102, 0.15); border-color: rgba(37, 211, 102, 0.35); color: #86efac !important; }
-    [data-theme="dark"] .btn-linkedin { background: rgba(10, 102, 194, 0.18); border-color: rgba(10, 102, 194, 0.4); color: #93c5fd !important; }
-    [data-theme="dark"] .btn-orcid { background: rgba(166, 206, 57, 0.15); border-color: rgba(166, 206, 57, 0.35); color: #bef264 !important; }
-    [data-theme="dark"] .btn-streamlit { background: rgba(255, 75, 75, 0.18); border-color: rgba(255, 75, 75, 0.4); color: #fca5a5 !important; }
-
+    /* Only Icons have their authentic traditional brand colors */
+    .btn-location i { color: #dc2626 !important; }  /* Location Red */
+    .btn-uniandes i { color: #d97706 !important; }  /* UniAndes Gold */
+    .btn-gmail i { color: #ea4335 !important; }     /* Gmail Red */
+    .btn-whatsapp i { color: #25d366 !important; }  /* WhatsApp Green */
+    .btn-linkedin i { color: #0a66c2 !important; }  /* LinkedIn Blue */
+    .btn-orcid i { color: #a6ce39 !important; }     /* ORCID Green */
+    .btn-streamlit i { color: #ff4b4b !important; } /* Streamlit Coral */
   </style>
 </head>
 <body>
