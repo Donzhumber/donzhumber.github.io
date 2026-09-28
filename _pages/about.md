@@ -7,18 +7,18 @@ redirect_from:
   - /about.html
 ---
 
-I am an Applied Economist and University Professor with a **Ph.D. in Economics from Universidad de los Andes** (Bogotá, Colombia, 2015) and over twenty years of research and teaching experience across academic, governmental, and multilateral institutions.
+**Dr. Humberto Bernal** is an Economics Researcher and University Professor (Ph.D. in Economics, Universidad de los Andes, 2015) with over twenty years of distinguished academic, multilateral, and public-sector tenure. His scholarship advances the frontier of **Dynamic Mechanism Design, Applied Microeconomics, Game Theory, and Empirical Industrial Organization**.
 
-My research agenda operates at the intersection of **applied microeconomic theory, empirical industrial organization (IO), dynamic mechanism design, and economic regulation**. I study how market structure, asymmetric information, and regulatory mechanisms shape strategic firm behavior, natural monopoly governance, and welfare.
+He integrates **Artificial Intelligence, agentic architectures, and computational modeling** to engineer optimal market solutions and address systemic market failures across four core domains:
+- **Labor Market Matching:** Algorithmic two-sided matching models optimizing allocative efficiency, information aggregation, and worker-firm assignment.
+- **Strategic Type Discovery:** Robust identification protocols and dynamic screening to uncover rational agent types and hidden preferences under incomplete information in unknown environments.
+- **Incentive-Compatible Auctions & Regulation:** Multi-unit auction design, concession contracts (4G/5G infrastructure), toll pricing, and regulatory governance for natural monopolies.
+- **Indirect Mechanism Design:** Pioneering theoretical formulations and agentic computational implementations of indirect mechanisms, with cutting-edge work currently under international peer review.
+
+His scholarship is widely published in internationally indexed peer-reviewed journals across economic regulation, industrial organization, labor economics, and public policy evaluation.
 
 ## Featured Research: Job Market Paper (2026)
 **Identifying Rational Types in Unknown Environments under an Indirect Dynamic Mechanism**  
 *Under review at the International Journal of Game Theory*  
-- [Launch Interactive Streamlit App](https://y5ss6jtuccvpbdvuy7kdgl.streamlit.app/)
+- [Launch Interactive Streamlit App](https://7kkgn4sfscykkfvv5794qw.streamlit.app/)
 - [Download Paper (PDF)](/files/Job_Market_Paper_Bernal_2026.pdf)
-
-## Research Fields & Core Competencies
-- **Industrial Organization & Competition Policy:** Empirical analysis of firm clustering, external economies of scale, market structure, barrier-to-entry dynamics, and strategic firm interaction.
-- **Dynamic Mechanism Design & Applied Microeconomic Theory:** Dynamic screening models under asymmetric information, incentive-compatible mechanisms, agent rationality under uncertainty, and computational interactive simulation.
-- **Regulatory Economics & Infrastructure:** Economic regulation of natural monopolies, concession contract design (4G highway concessions), public-private partnerships, transportation networks, and natural resource extraction shocks.
-- **Econometrics & Causal Inference:** Quasi-experimental identification (Difference-in-Differences, Instrumental Variables, Regression Discontinuity, Fixed Effects), microeconometrics, dynamic panel data, and Leontief input-output multiplier analysis.
