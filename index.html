@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Humberto Bernal, Ph.D. | Academic Profile & Curriculum Vitae</title>
-  <meta name="description" content="Academic personal website and curriculum vitae of Dr. Humberto Bernal. Associate Professor, Industrial Organization, Mechanism Design, and Regulatory Economics.">
+  <meta name="description" content="Academic personal website and curriculum vitae of Dr. Humberto Bernal. Economics Researcher and Professor of Applied Microeconomics, Game Theory, and Mechanism Design.">
   <meta name="author" content="Humberto Bernal, Ph.D.">
 
   <!-- Open Graph / Meta -->
   <meta property="og:title" content="Humberto Bernal, Ph.D. | Academic Website">
-  <meta property="og:description" content="Ph.D. in Economics (Universidad de los Andes). Applied Microeconomics, Industrial Organization, Dynamic Mechanism Design, and Regulation.">
+  <meta property="og:description" content="Academic website of Dr. Humberto Bernal. Economics Researcher and Professor of Applied Microeconomics, Game Theory, and Mechanism Design.">
   <meta property="og:type" content="website">
 
   <!-- Fonts & Icons -->
@@ -1410,17 +1410,9 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       checkAdminEnvironment();
-      // Restore saved edits if any
-      const savedContent = localStorage.getItem('academic_cv_content_area');
-      const savedSidebar = localStorage.getItem('academic_cv_sidebar');
-      if (savedContent && savedSidebar) {
-        document.querySelector('.content-area').innerHTML = savedContent;
-        document.querySelector('.sidebar').innerHTML = savedSidebar;
-        // Clean any lingering state
-        document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-        document.querySelectorAll('.editing-active').forEach(el => el.classList.remove('editing-active'));
-        showResetButtonIfNeeded();
-      }
+      // Clean any stale localStorage so file updates always take effect
+      localStorage.removeItem('academic_cv_content_area');
+      localStorage.removeItem('academic_cv_sidebar');
 
       const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', savedTheme);
