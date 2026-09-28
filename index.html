@@ -578,6 +578,118 @@
       padding: 0;
       margin-left: 0.5rem;
     }
+  
+    /* Sidebar Brand / Traditional Colored Buttons */
+    .sidebar-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+    .sidebar-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none !important;
+      transition: all 0.18s ease;
+      border: 1px solid transparent;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .sidebar-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      text-decoration: none !important;
+    }
+    .sidebar-btn i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .sidebar-btn-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 1. Bogotá, Colombia (Red Pin) */
+    .btn-location {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b !important;
+    }
+    .btn-location i { color: #dc2626; }
+    .btn-location:hover { background: #fee2e2; border-color: #f87171; }
+
+    /* 2. Universidad de los Andes (Oro y Negro UniAndes) */
+    .btn-uniandes {
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #78350f !important;
+    }
+    .btn-uniandes i { color: #d97706; }
+    .btn-uniandes:hover { background: #fef3c7; border-color: #fcd34d; }
+
+    /* 3. Gmail (Google Red) */
+    .btn-gmail {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: #9f1239 !important;
+    }
+    .btn-gmail i { color: #ea4335; }
+    .btn-gmail:hover { background: #ffe4e6; border-color: #fda4af; }
+
+    /* 4. WhatsApp / Phone (Verde WhatsApp) */
+    .btn-whatsapp {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: #166534 !important;
+    }
+    .btn-whatsapp i { color: #25d366; }
+    .btn-whatsapp:hover { background: #dcfce7; border-color: #86efac; }
+
+    /* 5. LinkedIn (Azul LinkedIn) */
+    .btn-linkedin {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e40af !important;
+    }
+    .btn-linkedin i { color: #0a66c2; }
+    .btn-linkedin:hover { background: #dbeafe; border-color: #60a5fa; }
+
+    /* 6. ORCID (Verde Oficial ORCID) */
+    .btn-orcid {
+      background: #f7fee7;
+      border-color: #d9f99d;
+      color: #3f6212 !important;
+    }
+    .btn-orcid i { color: #a6ce39; }
+    .btn-orcid:hover { background: #ecfccb; border-color: #bef264; }
+
+    /* 7. Streamlit (Rojo Coral Streamlit) */
+    .btn-streamlit {
+      background: #fff5f5;
+      border-color: #fed7d7;
+      color: #9b2c2c !important;
+    }
+    .btn-streamlit i { color: #ff4b4b; }
+    .btn-streamlit:hover { background: #fed7d7; border-color: #feb2b2; }
+
+    /* Dark Mode Variants */
+    [data-theme="dark"] .btn-location { background: rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.35); color: #fca5a5 !important; }
+    [data-theme="dark"] .btn-uniandes { background: rgba(217, 119, 6, 0.15); border-color: rgba(217, 119, 6, 0.35); color: #fde68a !important; }
+    [data-theme="dark"] .btn-gmail { background: rgba(234, 67, 53, 0.15); border-color: rgba(234, 67, 53, 0.35); color: #fda4af !important; }
+    [data-theme="dark"] .btn-whatsapp { background: rgba(37, 211, 102, 0.15); border-color: rgba(37, 211, 102, 0.35); color: #86efac !important; }
+    [data-theme="dark"] .btn-linkedin { background: rgba(10, 102, 194, 0.18); border-color: rgba(10, 102, 194, 0.4); color: #93c5fd !important; }
+    [data-theme="dark"] .btn-orcid { background: rgba(166, 206, 57, 0.15); border-color: rgba(166, 206, 57, 0.35); color: #bef264 !important; }
+    [data-theme="dark"] .btn-streamlit { background: rgba(255, 75, 75, 0.18); border-color: rgba(255, 75, 75, 0.4); color: #fca5a5 !important; }
+
   </style>
 </head>
 <body>
@@ -618,15 +730,42 @@
       <h2 class="author__name">Humberto Bernal, Ph.D.</h2>
       <p class="author__bio">Professor Coordinator & Applied Economics Researcher<br>Universidad Colegio Mayor de Cundinamarca</p>
 
-      <ul class="author__urls">
-        <li><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</li>
-        <li><i class="fas fa-university"></i> Ph.D. Universidad de los Andes (2015)</li>
-        <li><i class="fas fa-envelope"></i> <a href="mailto:zhumber@gmail.com">zhumber@gmail.com</a></li>
-        <li><i class="fas fa-phone"></i> +57 318 2918596</li>
-        <li><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/zhumber/" target="_blank">linkedin.com/in/zhumber</a></li>
-        <li><i class="ai ai-orcid"></i> <a href="https://orcid.org/0000-0002-4864-1726" target="_blank">0000-0002-4864-1726</a></li>
-        <li><i class="fas fa-laptop-code"></i> <a href="https://y5ss6jtuccvpbdvuy7kdgl.streamlit.app/" target="_blank">Streamlit Research App</a></li>
-      </ul>
+            <div class="sidebar-btn-group">
+        <a href="https://maps.google.com/?q=Bogota,Colombia" target="_blank" class="sidebar-btn btn-location" title="Bogotá, Colombia">
+          <i class="fas fa-map-marker-alt"></i>
+          <span class="sidebar-btn-text">Bogotá, Colombia</span>
+        </a>
+
+        <a href="https://uniandes.edu.co" target="_blank" class="sidebar-btn btn-uniandes" title="Ph.D. Universidad de los Andes (2015)">
+          <i class="fas fa-graduation-cap"></i>
+          <span class="sidebar-btn-text">Ph.D. Universidad de los Andes (2015)</span>
+        </a>
+
+        <a href="mailto:zhumber@gmail.com" class="sidebar-btn btn-gmail" title="Enviar correo a zhumber@gmail.com">
+          <i class="fas fa-envelope"></i>
+          <span class="sidebar-btn-text">zhumber@gmail.com</span>
+        </a>
+
+        <a href="https://wa.me/573182918596" target="_blank" class="sidebar-btn btn-whatsapp" title="WhatsApp / Teléfono: +57 318 2918596">
+          <i class="fab fa-whatsapp"></i>
+          <span class="sidebar-btn-text">+57 318 2918596</span>
+        </a>
+
+        <a href="https://linkedin.com/in/zhumber/" target="_blank" class="sidebar-btn btn-linkedin" title="Perfil de LinkedIn">
+          <i class="fab fa-linkedin"></i>
+          <span class="sidebar-btn-text">linkedin.com/in/zhumber</span>
+        </a>
+
+        <a href="https://orcid.org/0000-0002-4864-1726" target="_blank" class="sidebar-btn btn-orcid" title="Identificador ORCID">
+          <i class="ai ai-orcid"></i>
+          <span class="sidebar-btn-text">0000-0002-4864-1726</span>
+        </a>
+
+        <a href="https://y5ss6jtuccvpbdvuy7kdgl.streamlit.app/" target="_blank" class="sidebar-btn btn-streamlit" title="Streamlit Research App">
+          <i class="fas fa-laptop-code"></i>
+          <span class="sidebar-btn-text">Streamlit Research App</span>
+        </a>
+      </div>
 
       <a href="files/CV_Humberto_Bernal.pdf" class="cv-btn-download" target="_blank">
         <i class="fas fa-file-pdf"></i> Download Full CV (PDF)
