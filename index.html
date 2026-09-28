@@ -628,6 +628,36 @@
     .btn-linkedin i { color: #0a66c2 !important; }  /* LinkedIn Blue */
     .btn-orcid i { color: #a6ce39 !important; }     /* ORCID Green */
     .btn-streamlit i { color: #ff4b4b !important; } /* Streamlit Coral */
+  
+    /* ============================================================
+       ADMIN / EDIT CONTROLS VISIBILITY:
+       Hidden by default for all visitors on GitHub Pages.
+       Visible ONLY when opened locally on your PC (file://, localhost)
+       or when pressing Cmd+Shift+E.
+       ============================================================ */
+    .edit-tab-btn,
+    .edit-controls,
+    .btn-action-aux,
+    .btn-download-helper,
+    .admin-only,
+    .sidebar .no-edit {
+      display: none !important;
+    }
+
+    body.local-admin-mode .edit-tab-btn {
+      display: inline-flex !important;
+    }
+    body.local-admin-mode .edit-controls {
+      display: flex !important;
+    }
+    body.local-admin-mode .btn-action-aux {
+      display: inline-flex !important;
+    }
+    body.local-admin-mode .admin-only,
+    body.local-admin-mode .sidebar .no-edit {
+      display: block !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1352,7 +1382,34 @@
     }
 
     // Initialize state from hash or storage
+    
+    // Environment detection: enable edit mode ONLY on your local PC or with secret key
+    function checkAdminEnvironment() {
+      const isLocal = window.location.protocol === 'file:' || 
+                      window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1';
+      const urlParams = new URLSearchParams(window.location.search);
+      const forceEdit = urlParams.get('edit') === 'true' || localStorage.getItem('force_edit_mode') === 'true';
+
+      if (isLocal || forceEdit) {
+        document.body.classList.add('local-admin-mode');
+      } else {
+        document.body.classList.remove('local-admin-mode');
+      }
+    }
+
+    // Keyboard shortcut: Cmd+Shift+E (Mac) or Ctrl+Shift+E (PC) toggles edit buttons anytime
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        const active = document.body.classList.toggle('local-admin-mode');
+        localStorage.setItem('force_edit_mode', active ? 'true' : 'false');
+        showToast(active ? '🛠️ Modo edición visible' : '🔒 Modo edición oculto (Vista pública)');
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
+      checkAdminEnvironment();
       // Restore saved edits if any
       const savedContent = localStorage.getItem('academic_cv_content_area');
       const savedSidebar = localStorage.getItem('academic_cv_sidebar');
