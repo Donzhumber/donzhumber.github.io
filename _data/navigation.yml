@@ -1,0 +1,12 @@
+# main links links
+main:
+  - title: "About"
+    url: /
+  - title: "Curriculum Vitae"
+    url: /cv/
+  - title: "Publications"
+    url: /publications/
+  - title: "Research & JMP"
+    url: /research/
+  - title: "Teaching"
+    url: /teaching/

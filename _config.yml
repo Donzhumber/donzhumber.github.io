@@ -1,0 +1,53 @@
+# Site Settings
+locale                   : "en-US"
+title                    : "Humberto Bernal, Ph.D."
+title_separator          : "-"
+name                     : "Humberto Bernal, Ph.D."
+description              : "Academic website and CV of Dr. Humberto Bernal. Associate Professor, Industrial Organization, Mechanism Design, and Regulatory Economics."
+url                      : "https://donzhumber.github.io" # Change to your domain or GitHub Pages URL
+baseurl                  : "" # the subpath of your site, e.g. /blog/
+
+# Author Profile (Sidebar)
+author:
+  name             : "Humberto Bernal, Ph.D."
+  avatar           : "/images/profile.jpg"
+  bio              : "Professor Coordinator & Applied Economics Researcher"
+  location         : "Bogotá, Colombia"
+  employer         : "Universidad Colegio Mayor de Cundinamarca"
+  uri              : "https://y5ss6jtuccvpbdvuy7kdgl.streamlit.app/"
+  email            : "zhumber@gmail.com"
+  linkedin         : "zhumber"
+  orcid            : "0000-0002-4864-1726"
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+  - files
+
+# Collections
+collections:
+  teaching:
+    output: true
+    permalink: /:collection/:path/
+  publications:
+    output: true
+    permalink: /:collection/:path/
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+  talks:
+    output: true
+    permalink: /:collection/:path/
+
+# Markdown Processing
+markdown: kramdown
+highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-redirect-from
