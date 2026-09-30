@@ -11,6 +11,6 @@ redirect_from:
 
 ## Featured Research: Job Market Paper (2026)
 **Identifying Rational Types in Unknown Environments under an Indirect Dynamic Mechanism**  
-*Under review at the International Journal of Game Theory*  
+*Under review*  
 - [Launch Interactive Streamlit App](https://7kkgn4sfscykkfvv5794qw.streamlit.app/)
 - [Download Paper (PDF)](/files/Job_Market_Paper_Bernal_2026.pdf)

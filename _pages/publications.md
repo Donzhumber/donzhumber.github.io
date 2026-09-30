@@ -6,7 +6,7 @@ author_profile: true
 ---
 
 ## Working Papers
-* **Bernal, H. (2026).** *Identifying Rational Types in Unknown Environments under an Indirect Dynamic Mechanism.* Under review at *International Journal of Game Theory*. [[Interactive Streamlit App](https://7kkgn4sfscykkfvv5794qw.streamlit.app/)] [[PDF](/files/Job_Market_Paper_Bernal_2026.pdf)]
+* **Bernal, H. (2026).** *Identifying Rational Types in Unknown Environments under an Indirect Dynamic Mechanism.* Under review. [[Interactive Streamlit App](https://7kkgn4sfscykkfvv5794qw.streamlit.app/)] [[PDF](/files/Job_Market_Paper_Bernal_2026.pdf)]
 
 ## Peer-Reviewed Journal Articles
 * **Bernal, H. (2025).** Empowering deaf rights: enhancing access to Colombia's labor market. *The Journal of Deaf Studies and Deaf Education* (Oxford Academic), 30(4), 428–445. [DOI: 10.1093/jdsade/enaf034](https://doi.org/10.1093/jdsade/enaf034)
