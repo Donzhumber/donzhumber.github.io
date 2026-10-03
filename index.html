@@ -109,49 +109,76 @@
     .nav-links {
       display: flex;
       list-style: none;
-      gap: 0.25rem;
+      gap: 0.35rem;
       align-items: center;
+      background: var(--tag-bg);
+      padding: 0.28rem 0.35rem;
+      border-radius: 28px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
     .nav-btn {
-      padding: 0.45rem 0.85rem;
-      font-size: 0.95rem;
+      padding: 0.48rem 1.05rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text-muted);
       border: none;
-      background: none;
-      border-radius: var(--radius);
+      background: transparent;
+      border-radius: 22px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .nav-btn i {
+      font-size: 0.88rem;
+      opacity: 0.85;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .nav-btn:hover {
       color: var(--primary-color);
-      background-color: var(--tag-bg);
+      background-color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
     }
+    [data-theme="dark"] .nav-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .nav-btn:hover i {
+      transform: translateY(-1px);
+      opacity: 1;
+    }
     .nav-btn.active {
-      color: var(--primary-color);
-      background-color: var(--tag-bg);
-      border-bottom: 2px solid var(--primary-color);
+      color: #ffffff !important;
+      background-color: var(--primary-color);
+      box-shadow: 0 2px 8px rgba(0, 51, 102, 0.28);
+    }
+    .nav-btn.active i {
+      color: #ffffff !important;
+      opacity: 1;
     }
     .theme-toggle {
-      background: none;
+      background: var(--tag-bg);
       border: 1px solid var(--border-color);
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--text-muted);
-      margin-left: 0.5rem;
-      transition: all 0.15s ease;
+      margin-left: 0.25rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
     .theme-toggle:hover {
       color: var(--primary-color);
       border-color: var(--primary-color);
+      transform: rotate(15deg);
     }
 
     /* Layout Wrapper */
@@ -184,6 +211,7 @@
       height: 175px;
       border-radius: 50%;
       object-fit: cover;
+      object-position: center 20%;
       border: 3px solid var(--card-bg);
       box-shadow: var(--shadow-md);
     }
@@ -728,20 +756,16 @@
         <i class="fas fa-graduation-cap" style="color: var(--primary-color);"></i>
         <a href="#about" onclick="showTab('about')" style="color: inherit; text-decoration: none;">Humberto Bernal, <span>Ph.D.</span></a>
       </div>
-      <nav>
+      <nav style="display: flex; align-items: center; gap: 0.65rem;">
         <ul class="nav-links">
-          <li><button class="nav-btn active" onclick="showTab('about')">About</button></li>
-          <li><button class="nav-btn" onclick="showTab('cv')">CV</button></li>
-          <li><button class="nav-btn" onclick="showTab('publications')">Publications</button></li>
-          <li><button class="nav-btn" onclick="showTab('research')">Research & JMP</button></li>
-          <li><button class="nav-btn" onclick="showTab('teaching')">Teaching</button></li>
-          <li><button class="nav-btn" onclick="showTab('consulting')">Consulting & Policy</button></li>
-          <li>
-            <button class="theme-toggle" id="themeBtn" title="Toggle dark/light mode" onclick="toggleTheme()">
-              <i class="fas fa-moon" id="themeIcon"></i>
-            </button>
-          </li>
+          <li><button class="nav-btn active" onclick="showTab('about')"><i class="fas fa-user-tie"></i> About</button></li>
+          <li><button class="nav-btn" onclick="showTab('publications')"><i class="fas fa-book-open"></i> Publications</button></li>
+          <li><button class="nav-btn" onclick="showTab('teaching')"><i class="fas fa-chalkboard-teacher"></i> Teaching</button></li>
+          <li><button class="nav-btn" onclick="showTab('consulting')"><i class="fas fa-briefcase"></i> Consulting & Policy</button></li>
         </ul>
+        <button class="theme-toggle" id="themeBtn" title="Toggle dark/light mode" onclick="toggleTheme()">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
       </nav>
     </div>
   </header>
@@ -752,7 +776,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="author__avatar">
-        <img src="images/profile.jpg" alt="Dr. Humberto Bernal">
+        <img src="images/photo_2_matte.jpg?v=20261003" alt="Dr. Humberto Bernal">
       </div>
       <h2 class="author__name">Humberto Bernal, Ph.D.</h2>
       <p class="author__bio">Economics Researcher and Professor of Applied Microeconomics, Game Theory, and Mechanism Design</p>
@@ -830,7 +854,7 @@
           <span class="badge"><i class="fas fa-chalkboard-teacher"></i> Specialized Economics Courses</span>
         </div>
 
-        <p style="text-align: justify; text-justify: inter-word; line-height: 1.8; font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 1.5rem;"><strong>Dr. Humberto Bernal</strong> is an Economics Researcher and University Professor with a Ph.D. in Economics from Universidad de los Andes in 2015 and over 20 years of academic, multilateral, and public-sector experience. His research bridges <strong>Dynamic Mechanism Design, Applied Microeconomics, Game Theory, and Empirical Industrial Organization</strong>, leveraging <strong>Artificial Intelligence and agentic frameworks</strong> to solve complex market failures. His core contributions encompass algorithmic labor market matching, rational type discovery under asymmetric information, incentive-compatible auctions for public concessions, and indirect mechanism design, currently under international peer review. His scholarship is extensively published in internationally indexed peer-reviewed journals in economic regulation, market structure, and public policy.</p>
+        <p style="text-align: justify; text-justify: inter-word; line-height: 1.8; font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 1.5rem;"><strong>Dr. Humberto Bernal</strong> is an Applied Economist and Quantitative Researcher with a Ph.D. in Economics from Universidad de los Andes and over 20 years of experience leading empirical research. Proven leadership in directing large-scale data operations, managing multidisciplinary teams, and conducting econometric modeling and policy impact evaluations across academic, governmental, and multilateral institutions, including national ministries and international development banks. Research and teaching expertise bridge Applied Microeconomics, Econometrics, Dynamic Mechanism Design, Game Theory, and Empirical Industrial Organization, leveraging Big Data, Machine Learning, and Agentic AI workflows to address market frictions. Author of research published in leading journals, including Oxford University Press and Taylor & Francis.</p>
 
         <div class="featured-box">
           <h3><i class="fas fa-star" style="color: var(--accent-color);"></i> Featured Job Market Paper & Research App</h3>
@@ -903,96 +927,6 @@
           <li><strong>2025:</strong> Bernal, H. (2025). Empowering deaf rights: Enhancing access to Colombia's labor market. <a href="https://doi.org/10.1093/jdsade/enaf034" target="_blank" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;"><em>The Journal of Deaf Studies and Deaf Education</em>, <em>30</em>(4), 428–445</a>.</li>
           <li><strong>2022:</strong> Bernal, H. (2022). Intra-industry agglomeration and the external economies of scale model: Empirical evidence from Colombia. <a href="https://doi.org/10.1080/17421772.2021.2009905" target="_blank" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;"><em>Spatial Economic Analysis</em>, <em>17</em>(3), 321–338</a>.</li>
         </ul>
-      </section>
-
-
-      <!-- ================= TAB: CV ================= -->
-      <section id="cv" class="section-tab">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-          <div>
-            <h1 class="page__title" style="margin-bottom: 0;">Curriculum Vitae</h1>
-            <div class="page__subtitle" style="margin-bottom: 0;">Academic Trajectory, Education & Appointments</div>
-          </div>
-          <div class="no-edit edit-controls">
-            <button class="edit-tab-btn" onclick="toggleEditSection('cv', this)">
-              <i class="fas fa-edit"></i> Editar esta pestaña
-            </button>
-            <a href="files/CV_Humberto_Bernal.pdf" class="btn-pill btn-primary" target="_blank" style="padding: 0.5rem 1rem; font-size: 0.92rem;">
-              <i class="fas fa-download"></i> Download Full CV (PDF)
-            </a>
-          </div>
-        </div>
-
-        <h2><i class="fas fa-graduation-cap"></i> Education</h2>
-        <div class="timeline-item">
-          <div class="timeline-title">Ph.D. in Economics</div>
-          <div class="timeline-org">Universidad de los Andes — Bogotá, Colombia</div>
-          <div class="timeline-meta">Graduated February 27, 2015</div>
-          <p style="font-size: 0.92rem; margin: 0;">Specialization in Microeconomic Theory, Industrial Organization, and Econometrics. Doctoral dissertation on spatial concentration, firm agglomeration, and external economies of scale.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-title">M.Sc. in Economics (Magíster en Economía)</div>
-          <div class="timeline-org">Universidad de los Andes — Bogotá, Colombia</div>
-          <div class="timeline-meta">Graduated October 14, 2005</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-title">B.S. in Economics (Economista)</div>
-          <div class="timeline-org">Universidad Externado de Colombia — Bogotá, Colombia</div>
-          <div class="timeline-meta">Graduated December 12, 2003 &bull; Best Student Scholarship (2000, 2003)</div>
-        </div>
-
-        <h2><i class="fas fa-briefcase"></i> Academic & Professional Experience</h2>
-        <div class="timeline-item">
-          <div class="timeline-title">Professor Coordinator & University Professor</div>
-          <div class="timeline-org">Universidad Colegio Mayor de Cundinamarca</div>
-          <div class="timeline-meta">2019 — Present &bull; Bogotá, Colombia</div>
-          <ul style="padding-left: 1.1rem; font-size: 0.92rem;">
-            <li>Lead the Economics faculty curriculum development in Microeconomics, Game Theory, and Econometrics.</li>
-            <li>Direct empirical research on regional agglomeration and transport infrastructure.</li>
-            <li>Teach undergraduate and graduate cohorts with student evaluations consistently above <strong>4.5 / 5.0</strong>.</li>
-          </ul>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">Project Manager</div>
-          <div class="timeline-org">G&D Gerencia y Dirección de Proyectos S.A.S.</div>
-          <div class="timeline-meta">June 2022 — Dec 2022</div>
-          <p style="font-size: 0.92rem; margin: 0;">Directed the execution of the National Strategy for Socio-Occupational Orientation for Colombia's Ministry of National Education, managing empirical diagnostics and policy reporting.</p>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">Senior Economist & Data Desk Coordinator</div>
-          <div class="timeline-org">National Institute for the Deaf (INSOR)</div>
-          <div class="timeline-meta">2019 — 2020</div>
-          <p style="font-size: 0.92rem; margin: 0;">Directed statistical analysis on national labor microdata (GEIH, DANE) with over 200,000 observations. Modeled labor market participation and wage-gap decompositions, published in Oxford Academic.</p>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">External Researcher & Consultant / University Professor</div>
-          <div class="timeline-org">Inter-American Development Bank (IDB) / CNC / Universidad Externado / UniAndes</div>
-          <div class="timeline-meta">2008 — 2018</div>
-          <ul style="padding-left: 1.1rem; font-size: 0.92rem;">
-            <li>Conducted socio-economic evaluations of fourth-generation (4G) highway concessions in Colombia and Nicaragua for the IDB.</li>
-            <li>Taught advanced microeconomics and international economics at Universidad Externado de Colombia.</li>
-            <li>Analyzed regional macroeconomic shocks of oil and gas production for Universidad de los Andes.</li>
-          </ul>
-        </div>
-
-        <h2><i class="fas fa-tools"></i> Quantitative & Technical Toolkit</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
-          <div style="background: var(--tag-bg); padding: 1rem; border-radius: var(--radius);">
-            <strong>Statistical & Econometric Software:</strong><br>
-            Stata, R, Python (NumPy, Pandas, StatsModels), MATLAB, SQL.
-          </div>
-          <div style="background: var(--tag-bg); padding: 1rem; border-radius: var(--radius);">
-            <strong>Empirical Methods:</strong><br>
-            Difference-in-Differences, Instrumental Variables, Regression Discontinuity, Spatial Econometrics, Stochastic Frontier.
-          </div>
-          <div style="background: var(--tag-bg); padding: 1rem; border-radius: var(--radius);">
-            <strong>Web & Simulation Apps:</strong><br>
-            Streamlit, LaTeX, Git / GitHub, High-Performance Computing.
-          </div>
-        </div>
       </section>
 
 
@@ -1117,59 +1051,6 @@
       </section>
 
 
-      <!-- ================= TAB: RESEARCH ================= -->
-      <section id="research" class="section-tab">
-        <div class="tab-header-row">
-          <h1 class="page__title" style="margin-bottom: 0;">Research & Job Market Paper</h1>
-          <div class="no-edit edit-controls">
-            <button class="edit-tab-btn" onclick="toggleEditSection('research', this)">
-              <i class="fas fa-edit"></i> Editar esta pestaña
-            </button>
-          </div>
-        </div>
-        <div class="page__subtitle">Dynamic Mechanism Design, Industrial Organization & Infrastructure Economics</div>
-
-        <div class="featured-box">
-          <h2>Job Market Paper (2026)</h2>
-          <h3 style="color: var(--primary-color);">Identifying Rational Types in Unknown Environments under an Indirect Dynamic Mechanism</h3>
-          <p><strong>Author:</strong> Humberto Bernal, Ph.D.</p>
-          <p><strong>Status:</strong> Under review</p>
-
-          <p style="font-size: 0.95rem; line-height: 1.6; margin-top: 0.5rem; text-align: justify; text-justify: inter-word;">This work develops an indirect dynamic screening mechanism to elicit truthful type revelation without adverse selection failure, backed by an interactive computational simulation.</p>
-
-          <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-color); text-align: justify; text-justify: inter-word; border-left: 3px solid var(--primary-color); padding: 0.75rem 1.1rem; background: rgba(0, 51, 102, 0.03); border-radius: 0 var(--radius) var(--radius) 0; margin: 0.9rem 0;">
-            <strong>Abstract:</strong> This paper develops a dynamic indirect mechanism to identify rational types in unknown environments characterized by observational pooling. The central theoretical result, the Rational Type Identification Theorem, proves that the principal's Bayesian beliefs converge almost surely to the agent's true latent type along prolonged interactions without direct revelation reports. This asymptotic identification is operationalized by the Mano de Dios-Guadalupe process, an endogenous maximum-entropy noise kernel that ensures full support across actions within a competing-risks architecture. A complementary Implementability Theorem guarantees execution in Perfect Bayesian Equilibrium. Microeconometric calibration and deep-learning simulations of Colombian kidnapping validate rapid type separation and policy feasibility.
-          </div>
-
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
-            <strong>Keywords:</strong> indirect mechanism design, dynamic screening, endogenous implementation noise, Bayesian learning, type identification &bull; <strong>JEL Classification:</strong> C73, D82, K42
-          </p>
-
-          <div style="margin: 1.25rem 0; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <a href="https://7kkgn4sfscykkfvv5794qw.streamlit.app/" target="_blank" class="btn-pill btn-primary" style="padding: 0.6rem 1.1rem; font-size: 0.95rem;">
-              <i class="fas fa-play"></i> Open Live Streamlit Simulation
-            </a>
-            <a href="files/Job_Market_Paper_Bernal_2026.pdf" target="_blank" class="btn-pill" style="padding: 0.6rem 1.1rem; font-size: 0.95rem;">
-              <i class="fas fa-file-pdf"></i> Download Paper (PDF)
-            </a>
-            <a href="https://github.com/Donzhumber/CMP.git" target="_blank" class="btn-pill" style="padding: 0.6rem 1.1rem; font-size: 0.95rem;">
-              <i class="fab fa-github"></i> Replication Code & Data
-            </a>
-          </div>
-        </div>
-
-        <h2>Ongoing Research Projects</h2>
-        <div class="pub-card">
-          <div class="pub-title">1. Mitigating Opportunistic Renegotiation in Public-Private Infrastructure Concessions</div>
-          <p style="font-size: 0.92rem; color: var(--text-muted);">A dynamic game-theoretic and contract-theory framework analyzing why infrastructure concessions systematically suffer from post-award renegotiations. Formulates optimal penalty clauses and risk-sharing mechanisms to prevent hold-up problems.</p>
-        </div>
-        <div class="pub-card">
-          <div class="pub-title">2. Spatial Market Power and Digital Platforms in Latin American Logistics</div>
-          <p style="font-size: 0.92rem; color: var(--text-muted);">Empirical examination of localized logistics hubs, digital platform adoption, and regional price dispersion using microdata from Latin American emerging markets.</p>
-        </div>
-      </section>
-
-
       <!-- ================= TAB: TEACHING ================= -->
       <section id="teaching" class="section-tab">
         <div class="tab-header-row">
@@ -1180,69 +1061,81 @@
             </button>
           </div>
         </div>
-        <div class="page__subtitle">Two Decades of University Instruction in Microeconomics, Game Theory & Econometrics</div>
+        <div class="page__subtitle">Core and Advanced University Courses in Microeconomics, Game Theory, and Global Economics</div>
 
-        <p>Throughout my academic career at <strong>Universidad Colegio Mayor de Cundinamarca</strong> (Full Professor & Coordinator, 2019–present), <strong>Universidad Externado de Colombia</strong> (2008–2018), and <strong>Universidad Jorge Tadeo Lozano</strong>, I have designed and delivered core and advanced courses for economics, engineering, and business cohorts.</p>
+        <h2><i class="fas fa-graduation-cap"></i> Graduate Programs</h2>
 
-        <h2>Pedagogical Philosophy</h2>
-        <p>My teaching approach bridges axiomatic microeconomic foundations with hands-on empirical and computational tools. Students learn game theory and mechanism design not merely as abstract theorems, but as the operational architecture of antitrust policy, regulatory pricing, and platform strategy. Students solve real-world problem sets using Python, R, Stata, and interactive simulations.</p>
+        <!-- Course 1: Advanced Microeconomics -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Advanced Microeconomics</div>
+            <span class="badge"><i class="fas fa-graduation-cap"></i> Master's Program</span>
+          </div>
+          <p style="font-size: 0.94rem; line-height: 1.65; margin: 0; text-align: justify; text-justify: inter-word;">
+            Rigorous mathematical treatment of modern microeconomic theory, formalizing consumer choice through duality, expenditure minimization, and indirect utility systems under certainty and risk. Axiomatic analysis of producer theory, cost function structures, profit maximization, and competitive partial and general equilibrium theorems. In-depth investigation of information economics, contract theory, and asymmetric information, modeling adverse selection, moral hazard, and signaling mechanisms. Formalization of dynamic mechanism design, social choice theory, and market failure solutions across non-competitive market environments. Students develop computational simulations and solve complex analytical problem sets bridging theory with empirical industrial regulation.
+          </p>
+        </div>
 
-        <h2>Summary of Verified Student Evaluations</h2>
-        <p>Across academic terms and cohorts, student evaluations have <strong>consistently exceeded 4.5 out of 5.0</strong> (institutional benchmark: 3.8 / 5.0):</p>
+        <!-- Course 2: Global Markets -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Global Markets</div>
+            <span class="badge"><i class="fas fa-certificate"></i> Postgraduate Program</span>
+          </div>
+          <p style="font-size: 0.94rem; line-height: 1.65; margin: 0; text-align: justify; text-justify: inter-word;">
+            Advanced analysis of international product and factor markets, global production networks, and cross-border commercial strategy. Examines tariff and non-tariff barriers, exchange-rate pass-through mechanisms, strategic trade policies, and foreign direct investment (FDI) decisions. Evaluates market entry structures, multinational corporate behavior, cross-border pricing strategies, and global value chain integration. Analyzes multilateral governance frameworks, free trade agreements, and macroeconomic shock transmissions across developing and emerging economies. Students apply applied industrial organization tools and quantitative market diagnostics to assess real-world international trade frictions.
+          </p>
+        </div>
 
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Period</th>
-              <th>Course Subject Area</th>
-              <th>Level</th>
-              <th>Cohort Size</th>
-              <th>Student Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>2023 — 2024</strong></td>
-              <td>Mechanism Design & Regulatory Economics</td>
-              <td>Undergraduate / Graduate</td>
-              <td>42</td>
-              <td><strong>4.72 / 5.0</strong></td>
-            </tr>
-            <tr>
-              <td><strong>2022 — 2023</strong></td>
-              <td>Advanced Microeconomic Theory</td>
-              <td>Undergraduate / Graduate</td>
-              <td>38</td>
-              <td><strong>4.65 / 5.0</strong></td>
-            </tr>
-            <tr>
-              <td><strong>2021 — 2022</strong></td>
-              <td>Game Theory & Strategic Market Behavior</td>
-              <td>Undergraduate</td>
-              <td>45</td>
-              <td><strong>4.58 / 5.0</strong></td>
-            </tr>
-            <tr>
-              <td><strong>2019 — 2021</strong></td>
-              <td>Intermediate Microeconomics I & II</td>
-              <td>Undergraduate</td>
-              <td>40</td>
-              <td><strong>4.60 / 5.0</strong></td>
-            </tr>
-          </tbody>
-        </table>
+        <h2><i class="fas fa-book-open"></i> Undergraduate Programs</h2>
 
-        <h2>Courses Prepared & Available to Teach</h2>
-        <ul style="padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.8;">
-          <li><strong>Microeconomic Theory & Advanced Microeconomics:</strong> Axiomatic consumer/producer theory, general equilibrium, welfare economics, information economics.</li>
-          <li><strong>Game Theory & Mechanism Design:</strong> Dynamic games, Bayesian games, adverse selection, moral hazard, auction theory, dynamic screening.</li>
-          <li><strong>Industrial Organization & Competition Policy:</strong> Oligopoly models, barriers to entry, horizontal/vertical mergers, antitrust enforcement.</li>
-          <li><strong>Economic Regulation & Public-Private Partnerships:</strong> Price-cap vs. rate-of-return regulation, concession contracts, renegotiation mitigation.</li>
-          <li><strong>Applied Econometrics & Causal Inference:</strong> Difference-in-Differences, instrumental variables, panel data, spatial microeconometrics.</li>
-        </ul>
+        <!-- Course 3: Game Theory -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Game Theory</div>
+            <span class="badge"><i class="fas fa-chess-knight"></i> Undergraduate</span>
+          </div>
+          <p style="font-size: 0.94rem; line-height: 1.65; margin: 0; text-align: justify; text-justify: inter-word;">
+            Comprehensive study of interactive decision theory, formalizing strategic behavior across non-cooperative games in normal and extensive forms. Derivation and application of solution concepts: Nash Equilibrium in pure and mixed strategies, Subgame Perfection (SPE), and backward induction algorithms. Rigorous analysis of incomplete information games: Bayesian Nash Equilibrium and Perfect Bayesian Equilibrium applied to signaling, screening, and adverse selection. Strategic applications to industrial organization, oligopolistic pricing (Cournot, Bertrand, Stackelberg), bargaining protocols, and auction design. Hands-on computational exercises and interactive Python/Streamlit simulations enabling students to model equilibrium dynamics and counter-strategies.
+          </p>
+        </div>
+
+        <!-- Course 4: Economic Growth & Development -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Economic Growth & Development</div>
+            <span class="badge"><i class="fas fa-chart-line"></i> Undergraduate</span>
+          </div>
+          <p style="font-size: 0.94rem; line-height: 1.65; margin: 0; text-align: justify; text-justify: inter-word;">
+            In-depth exploration of long-run economic expansion and structural transformation, starting from the neoclassical Solow-Swan framework and convergence hypotheses. Formalization of endogenous growth models: human capital accumulation (Lucas), R&D-driven technological innovation (Romer), and creative destruction (Aghion-Howitt). Analysis of structural development constraints, credit market imperfections, poverty traps, wage polarization, and income inequality dynamics. Investigation of institutional economics: property rights enforcement, governance quality, political economy frictions, and colonial origins of comparative development. Integration of applied microeconometrics and quasi-experimental methods to evaluate real-world public policy impacts and infrastructure interventions.
+          </p>
+        </div>
+
+        <!-- Course 5: International Economics -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">International Economics</div>
+            <span class="badge"><i class="fas fa-globe-americas"></i> Undergraduate</span>
+          </div>
+          <p style="font-size: 0.94rem; line-height: 1.65; margin: 0; text-align: justify; text-justify: inter-word;">
+            Rigorous foundations of classical, neoclassical, and modern international trade theories, including Ricardian comparative advantage and the Heckscher-Ohlin-Samuelson theorem. Analysis of New Trade Theory models: monopolistic competition, consumer love-of-variety preferences (Krugman), and heterogeneous-firm trade models (Melitz). Economic evaluation of commercial policy instruments: welfare impacts of ad-valorem tariffs, import quotas, export subsidies, and anti-dumping regulations. International macroeconomics: balance of payments accounting, nominal and real exchange rate determination, purchasing power parity (PPP), and uncovered interest parity (UIP). Critical assessment of trade agreements, global supply chain disruptions, geopolitical trade tensions, and regional economic integration.
+          </p>
+        </div>
+
+        <!-- Course 6: Introduction to Economics -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Introduction to Economics</div>
+            <span class="badge"><i class="fas fa-landmark"></i> Undergraduate</span>
+          </div>
+          <p style="font-size: 0.94rem; line-height: 1.65; margin: 0; text-align: justify; text-justify: inter-word;">
+            Foundational exposition of fundamental microeconomic and macroeconomic principles for university students across economic and social disciplines. Microeconomic fundamentals: scarcity, opportunity cost, supply-demand interactions, market equilibrium price determination, and price elasticities. Analysis of welfare economics, market efficiency, government price controls, monopoly market distortions, externalities, and public goods provision. Macroeconomic foundations: national income accounting (GDP), price index measurement (inflation), labor market dynamics (unemployment), and business cycles. Introduction to macroeconomic policy tools: central bank monetary policy mechanisms, interest rate setting, fiscal spending, and public deficit sustainability.
+          </p>
+        </div>
       </section>
 
 
+      <!-- ================= TAB: CONSULTING ================= -->
       <!-- ================= TAB: CONSULTING ================= -->
       <section id="consulting" class="section-tab">
         <div class="tab-header-row">
@@ -1253,24 +1146,146 @@
             </button>
           </div>
         </div>
-        <div class="page__subtitle">High-Level Policy Advisory, Multilateral Evaluations, and Government Studies</div>
+        <div class="page__subtitle">Applied Economic Research, Quantitative Policy Evaluations, and Strategic Advisory</div>
 
-        <div class="pub-card">
-          <div class="pub-title">Inter-American Development Bank (IDB / BID) & Centro Nacional de Consultoría</div>
-          <div class="pub-venue">Senior External Consultant & Researcher</div>
-          <p style="font-size: 0.95rem;">Conducted socio-economic impact evaluations and regulatory assessments of major public-private highway concession corridors in Colombia and Nicaragua. Analyzed demand-risk allocation between governments and private concessionaires, toll-setting formulas, and mitigation of post-award contract renegotiations.</p>
+        <!-- 1. MEN / G&D -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Ministry of National Education of Colombia (MEN) / G&amp;D S.A.S.</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2022</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Project Manager — National Strategy for Socio-Occupational Orientation</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Led the technical direction and execution of the national strategy to revitalize socio-occupational guidance and curricular diversification across Colombian secondary education.<br>
+            &bull; Coordinated multi-disciplinary fieldwork teams diagnosing local labor market trajectories in close alignment with regional education secretariats.<br>
+            &bull; Supervised operational milestones, delivered technical policy syntheses, and spearheaded high-level interlocution with national authorities to enhance educational relevance.
+          </p>
         </div>
 
-        <div class="pub-card">
-          <div class="pub-title">Ministry of National Education of Colombia (MEN) / G&D S.A.S.</div>
-          <div class="pub-venue">Project Manager — National Strategy for Socio-Occupational Orientation</div>
-          <p style="font-size: 0.95rem;">Led the execution of national labor market diagnostics and educational orientation policies across regional departments in Colombia, coordinating multi-disciplinary teams and delivering policy synthesis to national authorities.</p>
+        <!-- 2. INSOR -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">National Institute for the Deaf (INSOR)</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2019 – 2020</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Lead Quantitative Researcher &amp; Senior Public Policy Contractor</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Processed and integrated large-scale microdata from the Great Integrated Household Survey (GEIH) and administrative registries to characterize the deaf population in Colombia.<br>
+            &bull; Formulated econometric and sociometric models to quantify wage disparities, labor market exclusion barriers, and access obstacles across the national education system.<br>
+            &bull; Produced technical analytics reports and actionable public policy guidelines advising regional government entities on inclusive labor market integration.
+          </p>
         </div>
 
-        <div class="pub-card">
-          <div class="pub-title">National Institute for the Deaf (INSOR)</div>
-          <div class="pub-venue">Senior Economist & Data Desk Coordinator</div>
-          <p style="font-size: 0.95rem;">Architected econometric analysis pipelines on national household surveys (GEIH) to quantify wage gaps and labor market participation barriers, translating findings into actionable public policy briefs for inclusive employment.</p>
+        <!-- 3. CNC / DNP -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">National Consulting Center (CNC S.A.) / National Planning Department (DNP)</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2016 – 2017</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Senior Economic &amp; Sociodemographic Dimension Researcher</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Conducted the prospective impact evaluation of Colombia's Fourth Generation (4G) Road Concessions Program across economic, demographic, and environmental dimensions over 5, 10, and 20-year horizons.<br>
+            &bull; Applied the Colombian Input-Output Matrix to quantify production spillovers, land-use reallocations, and long-term greenhouse gas emission trajectories for the Santana–Puerto Salgar pilot corridor.<br>
+            &bull; Built the comprehensive baseline indicator matrix and monitoring framework for national infrastructure policy results under DNP guidelines.
+          </p>
+        </div>
+
+        <!-- 4. IDB / UniAndes -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Inter-American Development Bank (IDB / BID) &amp; Universidad de los Andes</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2008 &amp; 2014</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Infrastructure Economic Consultant &amp; Research Assistant</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Modeled and projected daily vehicle traffic demand as a function of regional GDP, vehicular fleet evolution, and generalized travel costs for the Pasto–Mocoa highway corridor.<br>
+            &bull; Quantified vehicle operating cost (VOC) savings, accident reduction benefits, and net economic present value (NPV / EIRR) for major transport corridors in Colombia and Nicaragua (NI-L1087).<br>
+            &bull; Structured cost-benefit evaluation models and multilateral economic feasibility assessments underpinning major infrastructure investment loans.
+          </p>
+        </div>
+
+        <!-- 5. UniAndes Consultorías -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Universidad de los Andes — Specialized Economic Advisory</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2004 – 2012</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Economic Consultant &amp; Quantitative Modeling Specialist</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Quantified the macroeconomic and fiscal contribution of the hydrocarbon sector (oil &amp; natural gas) to core macroeconomic indicators of the Colombian economy (2000–2009).<br>
+            &bull; Formulated econometric labor market models and sociopolitical diagnostics for oil exploration zones (Petrominerales / Casanare / Llanos 25 &amp; 31 blocks).<br>
+            &bull; Designed cost accounting and pricing determination models for pharmaceutical drugs under state monopoly for the Faculty of Economics.
+          </p>
+        </div>
+
+        <!-- 6. Euromonitor -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Euromonitor International (London / Chicago)</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2008 – 2010</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Contract Market Research Analyst</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Conducted comprehensive market research, point-of-sale retail store audits, and high-level executive interviews across the Colombian consumer goods industry.<br>
+            &bull; Analyzed distribution network channels, company market shares, pricing trends, and market sizing models for the fresh food and beverage sectors.<br>
+            &bull; Authored authoritative English-language market intelligence reports utilized globally by multinational FMCG corporations, investment banks, and strategy consultancies.
+          </p>
+        </div>
+
+        <!-- 7. MBC Morison -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">MBC Morison Consulting</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2008</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">External Consultant — Financial Risk &amp; Credit Scoring</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Provided expert econometric advisory and developed credit risk scoring models for a leading commercial bank in Colombia.<br>
+            &bull; Estimated logistic regression models, non-parametric risk formulations, and peer scoring models to assess and calibrate borrower credit risk profiles.<br>
+            &bull; Drafted an international comparative memorandum benchmarking prudential credit risk regulations and scoring methodologies across Latin America and global markets.
+          </p>
+        </div>
+
+        <!-- 8. Fedesarrollo -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Fedesarrollo (Foundation for Higher Education and Development)</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2003</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Research Assistant — Public Finance &amp; Territorial Planning</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Participated in the diagnostic study of fiscal policy instruments for the Bogotá – Cundinamarca Regional Planning Board.<br>
+            &bull; Curated, cleaned, and evaluated municipal public finance time series, local tax revenue collections, and intergovernmental fiscal transfer mechanisms.<br>
+            &bull; Generated analytical findings to support fiscal harmonization, regional land-use planning, and the optimization of municipal revenue structures.
+          </p>
+        </div>
+
+        <!-- 9. ProColombia / Proexport -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">ProColombia (PROEXPORT Colombia)</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2009</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Market Intelligence Analyst</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Monitored and analyzed Colombian foreign trade statistics, export flow dynamics, and preferential tariff structures under bilateral trade agreements.<br>
+            &bull; Prepared industry competitiveness profiles and market intelligence dossiers for non-traditional export sectors targeting international markets.<br>
+            &bull; Developed quantitative sectoral indicators and tracking metrics to advise Colombian exporting enterprises on global commercial strategy.
+          </p>
+        </div>
+
+        <!-- 10. FANA -->
+        <div class="pub-card" style="margin-bottom: 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+            <div class="pub-title" style="font-size: 1.12rem; color: var(--primary-color);">Fundación para la Asistencia de la Niñez Abandonada (FANA)</div>
+            <span class="badge"><i class="far fa-calendar-alt"></i> 2008</span>
+          </div>
+          <div class="pub-venue" style="font-weight: 600; color: #4b5563; margin-bottom: 0.5rem;">Applied Socioeconomic Research Volunteer</div>
+          <p style="font-size: 0.94rem; line-height: 1.6; margin: 0; text-align: justify;">
+            &bull; Conducted socioeconomic research on living standards, vulnerability indices, and welfare priorities affecting abandoned and at-risk children in Colombia.<br>
+            &bull; Gathered and analyzed national household and child welfare data to model underlying economic determinants of childhood vulnerability.<br>
+            &bull; Formulated analytical diagnostic reports to strengthen programmatic targeting, family restitution programs, and social care protocols.
+          </p>
         </div>
       </section>
 
