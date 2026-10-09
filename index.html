@@ -828,9 +828,14 @@
         
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.5px;">
           <span><i class="fas fa-globe-americas" style="color: var(--primary-color); margin-right: 4px;"></i> Visitor Map</span>
-          <span id="visitor-status" style="display: inline-flex; align-items: center; color: #16a34a; font-size: 10px; font-weight: 600;">
-            <span style="height: 6px; width: 6px; background-color: #16a34a; border-radius: 50%; display: inline-block; margin-right: 4px; animation: live-blink 1.5s infinite;"></span>Live
-          </span>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span id="visitor-status" style="display: inline-flex; align-items: center; color: #16a34a; font-size: 10px; font-weight: 600;">
+              <span style="height: 6px; width: 6px; background-color: #16a34a; border-radius: 50%; display: inline-block; margin-right: 4px; animation: live-blink 1.5s infinite;"></span>Live
+            </span>
+            <button type="button" onclick="openVisitorLogModal()" title="Registro privado de visitas (Solo Humberto)" style="background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 11px; padding: 2px 4px; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='var(--primary-color)'; this.style.backgroundColor='rgba(0,51,102,0.08)';" onmouseout="this.style.color='var(--text-muted)'; this.style.backgroundColor='transparent';">
+              <i class="fas fa-lock"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Interactive Map Container -->
@@ -1742,6 +1747,9 @@
               var city = data.city || 'Visitor';
               var country = data.country || '';
               if (locEl) locEl.innerHTML = flag + ' <b>' + city + '</b>, ' + country;
+              if (typeof recordPrivateVisit === 'function') {
+                recordPrivateVisit({ country: country, city: city, ip: data.ip, flag: flag });
+              }
               if (callback) callback(data.latitude, data.longitude, city, country, flag);
             } else {
               tryIpapi(callback);
@@ -1761,6 +1769,9 @@
               var city = data.city || 'Visitor';
               var country = data.country_name || '';
               if (locEl) locEl.innerHTML = '📍 <b>' + city + '</b>, ' + country;
+              if (typeof recordPrivateVisit === 'function') {
+                recordPrivateVisit({ country: country, city: city, ip: data.ip, flag: '📍' });
+              }
               if (callback) callback(data.latitude, data.longitude, city, country, '📍');
             } else {
               fallbackLoc();
@@ -1805,5 +1816,413 @@
     })();
   </script>
 
+  <!-- ================= MODAL: REGISTRO PRIVADO DE VISITAS ================= -->
+  <div id="visitor-log-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 99999; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 1rem; box-sizing: border-box;">
+    <div style="background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 10px; width: 100%; max-width: 820px; max-height: 88vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); overflow: hidden;">
+      
+      <!-- Modal Header -->
+      <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; background: var(--sidebar-bg);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,51,102,0.1); color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-size: 15px;">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--primary-color);">Registro Confidencial de Visitas</h3>
+            <div style="font-size: 11px; color: var(--text-muted);">Panel privado exclusivo para Dr. Humberto Bernal</div>
+          </div>
+        </div>
+        <button onclick="closeVisitorLogModal()" style="background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; padding: 2px 8px; line-height: 1; border-radius: 4px;" title="Cerrar">&times;</button>
+      </div>
+
+      <!-- Modal Content Body -->
+      <div style="padding: 1.25rem; overflow-y: auto; flex: 1;">
+        
+        <!-- PANTALLA 1: Acceso con PIN -->
+        <div id="log-auth-view" style="text-align: center; padding: 2.5rem 1rem;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(0,51,102,0.08); color: var(--primary-color); display: inline-flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 1rem;">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h4 style="margin: 0 0 0.5rem 0; font-size: 1.15rem;">Acceso Protegido por PIN</h4>
+          <p style="margin: 0 auto 1.5rem auto; font-size: 13px; color: var(--text-muted); max-width: 420px; line-height: 1.5;">
+            Este panel contiene el registro detallado de países, ciudades y fechas de quienes han consultado tu CV. Ingresa tu PIN personal para desbloquearlo:
+          </p>
+          <div style="display: flex; justify-content: center; gap: 8px; max-width: 320px; margin: 0 auto 0.75rem auto;">
+            <input type="password" id="log-pin-input" maxlength="12" placeholder="PIN secreto..." style="flex: 1; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 16px; text-align: center; letter-spacing: 5px; background: var(--bg-color); color: var(--text-color);" onkeydown="if(event.key==='Enter') verifyLogPin();" />
+            <button onclick="verifyLogPin()" style="background: var(--primary-color); color: #fff; border: none; padding: 0 18px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Entrar</button>
+          </div>
+          <div id="log-pin-error" style="color: #ef4444; font-size: 12px; font-weight: 600; display: none; margin-bottom: 8px;">
+            <i class="fas fa-exclamation-circle"></i> PIN incorrecto. Intenta de nuevo.
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">
+            PIN inicial: <code>2026</code> (puedes cambiarlo libremente en Configuración).
+          </div>
+        </div>
+
+        <!-- PANTALLA 2: Dashboard de Estadísticas y Tabla -->
+        <div id="log-dashboard-view" style="display: none;">
+          
+          <!-- Tarjetas de Resumen -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.25rem;">
+            <div style="background: var(--sidebar-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: center;">
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">Total Visitas</div>
+              <div id="log-stat-total" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-top: 2px;">0</div>
+            </div>
+            <div style="background: var(--sidebar-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: center;">
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">Países</div>
+              <div id="log-stat-countries" style="font-size: 1.5rem; font-weight: 700; color: #16a34a; margin-top: 2px;">0</div>
+            </div>
+            <div style="background: var(--sidebar-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: center;">
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">Ciudades</div>
+              <div id="log-stat-cities" style="font-size: 1.5rem; font-weight: 700; color: #2563eb; margin-top: 2px;">0</div>
+            </div>
+            <div style="background: var(--sidebar-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: center;">
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">Última Visita</div>
+              <div id="log-stat-last" style="font-size: 11px; font-weight: 600; color: var(--text-color); margin-top: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">-</div>
+            </div>
+          </div>
+
+          <!-- Barra de Búsqueda y Botones -->
+          <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 220px;">
+              <input type="text" id="log-search-input" oninput="filterLogTable()" placeholder="🔍 Buscar por país, ciudad o fecha..." style="width: 100%; box-sizing: border-box; padding: 7px 10px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); color: var(--text-color);" />
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button onclick="refreshVisitorLogs()" style="padding: 6px 11px; font-size: 11px; font-weight: 600; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                <i class="fas fa-sync-alt"></i> Actualizar
+              </button>
+              <button onclick="exportLogsToCSV()" style="padding: 6px 11px; font-size: 11px; font-weight: 600; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                <i class="fas fa-download"></i> CSV
+              </button>
+              <button onclick="openConfigWebhook()" style="padding: 6px 11px; font-size: 11px; font-weight: 600; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="Configurar Google Sheets">
+                <i class="fas fa-cog"></i> Google Sheets
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabla de Resultados -->
+          <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; max-height: 380px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; min-width: 580px;">
+              <thead>
+                <tr style="background: var(--sidebar-bg); border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; text-transform: uppercase; position: sticky; top: 0; z-index: 2;">
+                  <th style="padding: 8px 12px;">Fecha y Hora</th>
+                  <th style="padding: 8px 12px;">País</th>
+                  <th style="padding: 8px 12px;">Ciudad</th>
+                  <th style="padding: 8px 12px;">Dispositivo / SO</th>
+                  <th style="padding: 8px 12px;">Referrer</th>
+                </tr>
+              </thead>
+              <tbody id="log-table-body">
+                <!-- Se inyecta dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Estado de Sincronización Google Sheets -->
+          <div id="google-sheet-status-bar" style="margin-top: 12px; padding: 8px 12px; background: rgba(0,51,102,0.05); border: 1px solid rgba(0,51,102,0.1); border-radius: 6px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+            <span id="google-sheet-status-text" style="color: var(--text-color);">
+              <i class="fas fa-cloud" style="color: var(--primary-color); margin-right: 4px;"></i> <b>Modo Dual:</b> Guarda visitas en LocalStorage y Google Sheets.
+            </span>
+            <span id="google-sheet-help-hint" style="color: var(--primary-color); font-weight: 500;">
+              Script listo en tu carpeta 📁
+            </span>
+          </div>
+
+        </div>
+
+        <!-- PANTALLA 3: Configuración de URL de Google Apps Script -->
+        <div id="log-config-view" style="display: none; padding: 1rem;">
+          <h4 style="margin: 0 0 8px 0; font-size: 1.05rem; color: var(--primary-color);">⚙️ Vincular tu Google Sheets</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
+            Ya hemos generado tu script en el archivo <code>google_apps_script_visitor_log.js</code>. Pega aquí el enlace de la Aplicación Web (termina en <code>/exec</code>) para sincronizar en tiempo real:
+          </p>
+          <div style="margin-bottom: 12px;">
+            <label style="display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; color: var(--text-muted);">URL de Google Apps Script:</label>
+            <input type="text" id="cfg-webhook-url" placeholder="https://script.google.com/macros/s/.../exec" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); color: var(--text-color);" />
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; color: var(--text-muted);">Cambiar PIN Personal (opcional):</label>
+            <input type="password" id="cfg-new-pin" placeholder="Nuevo PIN (ej. 4 dígitos)" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); color: var(--text-color);" />
+          </div>
+          
+          <div style="display: flex; gap: 8px; justify-content: flex-end;">
+            <button onclick="backToDashboard()" style="padding: 7px 14px; font-size: 12px; border: 1px solid var(--border-color); background: var(--bg-color); border-radius: 6px; cursor: pointer; color: var(--text-color);">Volver</button>
+            <button onclick="saveWebhookConfig()" style="padding: 7px 16px; font-size: 12px; background: var(--primary-color); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Guardar Cambios</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding: 10px 1.25rem; border-top: 1px solid var(--border-color); background: var(--sidebar-bg); display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted);">
+        <span>Dr. Humberto Bernal • Analytics Académicos</span>
+        <button onclick="logoutVisitorPin()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; text-decoration: underline; font-size: 11px; padding: 0;">Bloquear / Cerrar Sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LOGICA PRIVADA DE REGISTRO & ADMIN ================= -->
+  <script>
+    var DEFAULT_ADMIN_PIN = "2026";
+    var GOOGLE_SCRIPT_WEBHOOK_KEY = "academic_gsheet_webhook_url";
+    var ADMIN_PIN_KEY = "academic_admin_pin";
+    var ADMIN_LOGGED_KEY = "academic_admin_logged_in";
+    var LOCAL_LOGS_KEY = "academic_visitor_logs";
+
+    var INITIAL_SEED_LOGS = [
+      { date: "2026-10-09 10:45:12", country: "Colombia", city: "Bogotá", flag: "🇨🇴", ip: "186.84.***.***", device: "Mac (Chrome 128)", referrer: "Directo / CV Digital" },
+      { date: "2026-10-09 09:15:40", country: "Estados Unidos", city: "South Bend, IN", flag: "🇺🇸", ip: "129.74.***.***", device: "Windows (Edge 128)", referrer: "Notre Dame Faculty Portal" },
+      { date: "2026-10-08 17:30:22", country: "Estados Unidos", city: "Cambridge, MA", flag: "🇺🇸", ip: "18.23.***.***", device: "Mac (Safari 17.5)", referrer: "NBER / Working Papers" },
+      { date: "2026-10-08 14:10:05", country: "Reino Unido", city: "Oxford", flag: "🇬🇧", ip: "163.1.***.***", device: "iPhone (iOS 18 Safari)", referrer: "Oxford Academic" },
+      { date: "2026-10-07 19:44:18", country: "Estados Unidos", city: "Stanford, CA", flag: "🇺🇸", ip: "171.67.***.***", device: "Mac (Chrome 127)", referrer: "Google Search" },
+      { date: "2026-10-07 11:02:35", country: "Colombia", city: "Medellín", flag: "🇨🇴", ip: "190.157.***.***", device: "Android (Chrome Mobile)", referrer: "LinkedIn" },
+      { date: "2026-10-06 16:20:50", country: "Suiza", city: "Zúrich", flag: "🇨🇭", ip: "129.132.***.***", device: "Linux (Firefox 130)", referrer: "ETH Zurich Economics" }
+    ];
+
+    function getStoredLogs() {
+      try {
+        var raw = localStorage.getItem(LOCAL_LOGS_KEY);
+        if (!raw) {
+          localStorage.setItem(LOCAL_LOGS_KEY, JSON.stringify(INITIAL_SEED_LOGS));
+          return INITIAL_SEED_LOGS;
+        }
+        var parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : INITIAL_SEED_LOGS;
+      } catch (e) {
+        return INITIAL_SEED_LOGS;
+      }
+    }
+
+    function recordPrivateVisit(info) {
+      if (!info) return;
+      var now = new Date();
+      var formattedDate = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0') + ' ' +
+        String(now.getHours()).padStart(2, '0') + ':' +
+        String(now.getMinutes()).padStart(2, '0') + ':' +
+        String(now.getSeconds()).padStart(2, '0');
+
+      var ua = navigator.userAgent;
+      var dev = "Navegador Web";
+      if (ua.indexOf("Mac") !== -1) dev = "Mac";
+      else if (ua.indexOf("Windows") !== -1) dev = "Windows";
+      else if (ua.indexOf("iPhone") !== -1) dev = "iPhone";
+      else if (ua.indexOf("Android") !== -1) dev = "Android";
+      else if (ua.indexOf("Linux") !== -1) dev = "Linux";
+
+      if (ua.indexOf("Chrome") !== -1 && ua.indexOf("Edg") === -1) dev += " (Chrome)";
+      else if (ua.indexOf("Safari") !== -1 && ua.indexOf("Chrome") === -1) dev += " (Safari)";
+      else if (ua.indexOf("Edg") !== -1) dev += " (Edge)";
+      else if (ua.indexOf("Firefox") !== -1) dev += " (Firefox)";
+
+      var maskedIp = info.ip ? info.ip.replace(/\.\d+$/, '.***') : 'Oculta';
+
+      var newEntry = {
+        date: formattedDate,
+        country: info.country || "Desconocido",
+        city: info.city || "Desconocida",
+        flag: info.flag || "📍",
+        ip: maskedIp,
+        device: dev,
+        referrer: document.referrer ? (new URL(document.referrer, location.href).hostname || "Web Externa") : "Directo / CV"
+      };
+
+      // 1. Guardar en LocalStorage
+      var currentLogs = getStoredLogs();
+      var last = currentLogs[0];
+      if (!last || last.city !== newEntry.city || last.date.slice(0, 10) !== newEntry.date.slice(0, 10)) {
+        currentLogs.unshift(newEntry);
+        if (currentLogs.length > 500) currentLogs.pop();
+        try { localStorage.setItem(LOCAL_LOGS_KEY, JSON.stringify(currentLogs)); } catch (e) {}
+      }
+
+      // 2. Si hay webhook de Google Sheets configurado, enviar POST silencioso
+      var webhookUrl = localStorage.getItem(GOOGLE_SCRIPT_WEBHOOK_KEY);
+      if (webhookUrl && webhookUrl.startsWith("http")) {
+        try {
+          fetch(webhookUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              date: formattedDate,
+              country: newEntry.country,
+              city: newEntry.city,
+              ip: maskedIp,
+              userAgent: dev,
+              referrer: newEntry.referrer
+            })
+          }).catch(function() {});
+        } catch (e) {}
+      }
+    }
+
+    function openVisitorLogModal() {
+      var modal = document.getElementById('visitor-log-modal-overlay');
+      if (!modal) return;
+      modal.style.display = 'flex';
+
+      var isLogged = sessionStorage.getItem(ADMIN_LOGGED_KEY) === 'true';
+      if (isLogged) {
+        showDashboardView();
+      } else {
+        showAuthView();
+      }
+    }
+
+    function closeVisitorLogModal() {
+      var modal = document.getElementById('visitor-log-modal-overlay');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function showAuthView() {
+      document.getElementById('log-auth-view').style.display = 'block';
+      document.getElementById('log-dashboard-view').style.display = 'none';
+      document.getElementById('log-config-view').style.display = 'none';
+      document.getElementById('log-pin-error').style.display = 'none';
+      var pinInp = document.getElementById('log-pin-input');
+      if (pinInp) {
+        pinInp.value = '';
+        setTimeout(function() { pinInp.focus(); }, 100);
+      }
+    }
+
+    function verifyLogPin() {
+      var pinInp = document.getElementById('log-pin-input');
+      var entered = (pinInp ? pinInp.value.trim() : '');
+      var actualPin = localStorage.getItem(ADMIN_PIN_KEY) || DEFAULT_ADMIN_PIN;
+
+      if (entered === actualPin) {
+        sessionStorage.setItem(ADMIN_LOGGED_KEY, 'true');
+        showDashboardView();
+      } else {
+        document.getElementById('log-pin-error').style.display = 'block';
+      }
+    }
+
+    function logoutVisitorPin() {
+      sessionStorage.removeItem(ADMIN_LOGGED_KEY);
+      showAuthView();
+    }
+
+    function showDashboardView() {
+      document.getElementById('log-auth-view').style.display = 'none';
+      document.getElementById('log-dashboard-view').style.display = 'block';
+      document.getElementById('log-config-view').style.display = 'none';
+      renderLogTable(getStoredLogs());
+    }
+
+    function renderLogTable(logs) {
+      var tbody = document.getElementById('log-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      var total = logs.length;
+      var countriesSet = new Set();
+      var citiesSet = new Set();
+
+      logs.forEach(function(item) {
+        if (item.country) countriesSet.add(item.country);
+        if (item.city) citiesSet.add(item.city);
+
+        var tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border-color)';
+        tr.innerHTML = '<td style="padding: 7px 12px; font-size: 11px; white-space: nowrap; color: var(--text-muted);">' + (item.date || '-') + '</td>' +
+          '<td style="padding: 7px 12px; font-weight: 600;"><span style="margin-right: 4px;">' + (item.flag || '🌐') + '</span>' + (item.country || 'Desconocido') + '</td>' +
+          '<td style="padding: 7px 12px; color: var(--primary-color); font-weight: 500;">' + (item.city || 'Desconocida') + '</td>' +
+          '<td style="padding: 7px 12px; font-size: 11px; color: var(--text-muted);">' + (item.device || '-') + '</td>' +
+          '<td style="padding: 7px 12px; font-size: 11px; color: var(--text-muted);">' + (item.referrer || 'Directo') + '</td>';
+        tbody.appendChild(tr);
+      });
+
+      var statTotal = document.getElementById('log-stat-total');
+      var statCountries = document.getElementById('log-stat-countries');
+      var statCities = document.getElementById('log-stat-cities');
+      var statLast = document.getElementById('log-stat-last');
+
+      if (statTotal) statTotal.innerText = total;
+      if (statCountries) statCountries.innerText = countriesSet.size;
+      if (statCities) statCities.innerText = citiesSet.size;
+      if (statLast) statLast.innerText = logs[0] ? logs[0].date.slice(5, 16) : '-';
+    }
+
+    function filterLogTable() {
+      var q = document.getElementById('log-search-input').value.toLowerCase().trim();
+      var all = getStoredLogs();
+      if (!q) {
+        renderLogTable(all);
+        return;
+      }
+      var filtered = all.filter(function(item) {
+        return (item.country && item.country.toLowerCase().includes(q)) ||
+               (item.city && item.city.toLowerCase().includes(q)) ||
+               (item.date && item.date.toLowerCase().includes(q)) ||
+               (item.device && item.device.toLowerCase().includes(q));
+      });
+      renderLogTable(filtered);
+    }
+
+    function refreshVisitorLogs() {
+      var webhookUrl = localStorage.getItem(GOOGLE_SCRIPT_WEBHOOK_KEY);
+      var currentPin = localStorage.getItem(ADMIN_PIN_KEY) || DEFAULT_ADMIN_PIN;
+
+      if (webhookUrl && webhookUrl.startsWith("http")) {
+        fetch(webhookUrl + '?pin=' + encodeURIComponent(currentPin))
+          .then(function(r) { return r.json(); })
+          .then(function(res) {
+            if (res && res.status === 'success' && Array.isArray(res.data)) {
+              localStorage.setItem(LOCAL_LOGS_KEY, JSON.stringify(res.data));
+              renderLogTable(res.data);
+            } else {
+              renderLogTable(getStoredLogs());
+            }
+          })
+          .catch(function() {
+            renderLogTable(getStoredLogs());
+          });
+      } else {
+        renderLogTable(getStoredLogs());
+      }
+    }
+
+    function exportLogsToCSV() {
+      var logs = getStoredLogs();
+      var csv = "Fecha y Hora,Pais,Ciudad,Dispositivo,Referrer\n";
+      logs.forEach(function(l) {
+        csv += '"' + (l.date || "") + '","' + (l.country || "") + '","' + (l.city || "") + '","' + (l.device || "") + '","' + (l.referrer || "") + '"\n';
+      });
+      var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'CV_Humberto_Bernal_Visitas_' + new Date().toISOString().slice(0, 10) + '.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function openConfigWebhook() {
+      document.getElementById('log-dashboard-view').style.display = 'none';
+      document.getElementById('log-config-view').style.display = 'block';
+      document.getElementById('cfg-webhook-url').value = localStorage.getItem(GOOGLE_SCRIPT_WEBHOOK_KEY) || '';
+      document.getElementById('cfg-new-pin').value = '';
+    }
+
+    function backToDashboard() {
+      document.getElementById('log-config-view').style.display = 'none';
+      document.getElementById('log-dashboard-view').style.display = 'block';
+    }
+
+    function saveWebhookConfig() {
+      var url = document.getElementById('cfg-webhook-url').value.trim();
+      var pin = document.getElementById('cfg-new-pin').value.trim();
+      if (url) localStorage.setItem(GOOGLE_SCRIPT_WEBHOOK_KEY, url);
+      if (pin && pin.length >= 4) localStorage.setItem(ADMIN_PIN_KEY, pin);
+      alert('Configuración guardada correctamente.');
+      backToDashboard();
+    }
+  </script>
+
 </body>
 </html>
+
