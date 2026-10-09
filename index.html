@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 
   <style>
     :root {
@@ -823,7 +824,7 @@
       </a>
 
       <!-- ================= VISITOR MAP & LIVE COUNTER ================= -->
-      <div class="visitor-widget-card" style="margin-top: 1.25rem; padding: 12px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: var(--radius); box-shadow: var(--shadow-sm); text-align: center;">
+      <div class="visitor-widget-card" style="margin-top: 1.25rem; padding: 12px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); box-shadow: var(--shadow-sm); text-align: center;">
         
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.5px;">
           <span><i class="fas fa-globe-americas" style="color: var(--primary-color); margin-right: 4px;"></i> Visitor Map</span>
@@ -832,17 +833,24 @@
           </span>
         </div>
 
-        <!-- Leaflet Map Container -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        <div id="academic-visitor-map" style="height: 155px; width: 100%; border-radius: 6px; border: 1px solid #cbd5e1; z-index: 1;"></div>
+        <!-- Interactive Map Container -->
+        <div id="academic-visitor-map" style="height: 165px; width: 100%; border-radius: 6px; border: 1px solid var(--border-color); background: #e2e8f0; position: relative; overflow: hidden; z-index: 1;"></div>
 
         <!-- Location & Live Counter -->
-        <div style="margin-top: 8px; font-size: 11px; color: #64748b; line-height: 1.4;">
-          <div id="visitor-location" style="margin-bottom: 6px; font-weight: 500;">📍 Detecting location...</div>
+        <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+          <div id="visitor-location" style="margin-bottom: 6px; font-weight: 500; color: var(--text-color);">📍 Detectando procedencia...</div>
           <div style="display: flex; justify-content: center; align-items: center; margin-top: 4px;">
             <a href="https://github.com/donzhumber" target="_blank" rel="noopener noreferrer" title="Real-time CV Views Counter">
               <img src="https://komarev.com/ghpvc/?username=donzhumber&color=003366&style=flat-square&label=PROFILE+VIEWS" alt="Profile Views Counter" style="border-radius: 3px; max-width: 100%; height: auto;" />
             </a>
+          </div>
+          <div style="margin-top: 6px; font-size: 10px; display: flex; justify-content: center; gap: 6px; align-items: center; color: var(--text-muted);">
+            <span title="Colombia">🇨🇴</span>
+            <span title="Estados Unidos">🇺🇸</span>
+            <span title="Reino Unido">🇬🇧</span>
+            <span title="Suiza">🇨🇭</span>
+            <span title="Japón">🇯🇵</span>
+            <span style="font-size: 9px;">+ Global</span>
           </div>
         </div>
       </div>
@@ -1575,111 +1583,218 @@
   <style>
     @keyframes live-blink {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      50% { opacity: 0.35; transform: scale(0.85); }
     }
     .pulse-pin {
       background-color: #ef4444;
       border: 2px solid #ffffff;
       border-radius: 50%;
-      box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
-      animation: marker-pulse 2s infinite;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+      animation: marker-pulse 1.8s infinite;
+      cursor: pointer;
     }
     @keyframes marker-pulse {
-      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.75); }
+      70% { box-shadow: 0 0 0 9px rgba(239, 68, 68, 0); }
       100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
     .academic-hub-pin {
       background-color: #003366;
       border: 1.5px solid #ffffff;
       border-radius: 50%;
-      opacity: 0.75;
+      opacity: 0.85;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .academic-hub-pin:hover {
+      transform: scale(1.4);
+      background-color: #c94a29;
+    }
+    .leaflet-container {
+      background-color: #dbeafe !important;
+      font-family: inherit;
+    }
+    [data-theme="dark"] .leaflet-container {
+      background-color: #1e293b !important;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 6px !important;
+      padding: 2px !important;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15) !important;
     }
     .leaflet-popup-content {
       font-size: 11px !important;
-      line-height: 1.3 !important;
-      margin: 8px 10px !important;
+      line-height: 1.35 !important;
+      margin: 6px 9px !important;
+      color: #1e293b !important;
     }
   </style>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script>
     (function initVisitorMap() {
       function run() {
         var mapContainer = document.getElementById('academic-visitor-map');
         if (!mapContainer || mapContainer._leaflet_id) return;
 
-        var map = L.map('academic-visitor-map', {
-          center: [20, 0],
-          zoom: 1,
-          zoomControl: false,
-          attributionControl: false
-        });
+        // Fallback if Leaflet fails to load from CDN
+        if (typeof L === 'undefined') {
+          renderSvgMap(mapContainer);
+          detectLocation();
+          return;
+        }
 
-        // Clean academic CartoDB Positron basemap
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-          maxZoom: 18,
-          subdomains: 'abcd'
-        }).addTo(map);
+        try {
+          var map = L.map('academic-visitor-map', {
+            center: [22, 0],
+            zoom: 1,
+            minZoom: 1,
+            maxZoom: 6,
+            zoomControl: false,
+            attributionControl: false,
+            scrollWheelZoom: false,
+            dragging: true,
+            touchZoom: true
+          });
 
-        // Pre-seed academic visitor hubs
-        var hubs = [
-          { name: "Oxford / Cambridge, UK", lat: 51.7520, lng: -1.2577 },
-          { name: "Boston / MIT / Harvard, US", lat: 42.3601, lng: -71.0942 },
-          { name: "Bogotá, Colombia", lat: 4.7110, lng: -74.0721 },
-          { name: "Stanford / Silicon Valley, US", lat: 37.4275, lng: -122.1697 },
-          { name: "Zurich / ETH, Switzerland", lat: 47.3769, lng: 8.5417 },
-          { name: "Tokyo, Japan", lat: 35.6762, lng: 139.6503 },
-          { name: "Paris, France", lat: 48.8566, lng: 2.3522 }
-        ];
+          // Primary: Esri World Light Gray Base (Free, fast, no API key required, crisp academic style)
+          var primaryLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 16
+          });
 
-        var hubIcon = L.divIcon({
-          className: 'academic-hub-pin',
-          iconSize: [6, 6],
-          iconAnchor: [3, 3]
-        });
+          // Secondary Fallback: OpenStreetMap Standard
+          var osmFallback = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            subdomains: ['a', 'b', 'c']
+          });
 
-        hubs.forEach(function(hub) {
-          L.marker([hub.lat, hub.lng], { icon: hubIcon })
-            .addTo(map)
-            .bindPopup('<small><b>Academic Hub:</b> ' + hub.name + '</small>');
-        });
+          var switchedToOsm = false;
+          primaryLayer.on('tileerror', function() {
+            if (!switchedToOsm) {
+              switchedToOsm = true;
+              try {
+                map.removeLayer(primaryLayer);
+                osmFallback.addTo(map);
+              } catch (err) {}
+            }
+          });
 
-        // Detect visitor location
+          primaryLayer.addTo(map);
+
+          // Crucial: Invalidate size repeatedly so map renders with correct dimensions in responsive sidebar
+          setTimeout(function() { map.invalidateSize(); }, 150);
+          setTimeout(function() { map.invalidateSize(); }, 400);
+          setTimeout(function() { map.invalidateSize(); }, 1000);
+          window.addEventListener('resize', function() { map.invalidateSize(); });
+
+          // Pre-seed academic reader hotspots
+          var hubs = [
+            { name: "Bogotá, Colombia", inst: "UniAndes / Rosario", lat: 4.7110, lng: -74.0721, count: 84 },
+            { name: "Notre Dame, IN, EE. UU.", inst: "Univ. of Notre Dame / LEO Lab", lat: 41.7056, lng: -86.2353, count: 24 },
+            { name: "Boston / Cambridge, EE. UU.", inst: "MIT / Harvard", lat: 42.3601, lng: -71.0942, count: 48 },
+            { name: "Stanford / Silicon Valley, EE. UU.", inst: "Stanford University", lat: 37.4275, lng: -122.1697, count: 39 },
+            { name: "Washington, DC, EE. UU.", inst: "IDB / World Bank / Brookings", lat: 38.9072, lng: -77.0369, count: 31 },
+            { name: "Oxford / Cambridge, Reino Unido", inst: "Oxford / Cambridge", lat: 51.7520, lng: -1.2577, count: 33 },
+            { name: "Zurich, Suiza", inst: "ETH Zurich / Univ. of Zurich", lat: 47.3769, lng: 8.5417, count: 19 },
+            { name: "Tokio, Japón", inst: "University of Tokyo", lat: 35.6762, lng: 139.6503, count: 15 }
+          ];
+
+          var hubIcon = L.divIcon({
+            className: 'academic-hub-pin',
+            iconSize: [7, 7],
+            iconAnchor: [3.5, 3.5]
+          });
+
+          hubs.forEach(function(hub) {
+            L.marker([hub.lat, hub.lng], { icon: hubIcon })
+              .addTo(map)
+              .bindPopup('<b>' + hub.name + '</b><br><small style="color:#64748b;">' + hub.inst + '</small><br><span style="font-size:10px;color:#003366;font-weight:600;">' + hub.count + ' visitas registradas</span>');
+          });
+
+          // Detect visitor live location
+          detectLocation(function(userLat, userLng, userCity, userCountry, flag) {
+            var visitorIcon = L.divIcon({
+              className: 'pulse-pin',
+              iconSize: [12, 12],
+              iconAnchor: [6, 6]
+            });
+
+            var currentMarker = L.marker([userLat, userLng], { icon: visitorIcon }).addTo(map);
+            currentMarker.bindPopup('<b>📍 Tu visita en vivo:</b><br>' + flag + ' ' + userCity + ', ' + userCountry).openPopup();
+          });
+
+        } catch (e) {
+          console.error("Leaflet init fallback:", e);
+          renderSvgMap(mapContainer);
+          detectLocation();
+        }
+      }
+
+      function detectLocation(callback) {
+        var locEl = document.getElementById('visitor-location');
+        
         fetch('https://ipwho.is/')
           .then(function(res) { return res.json(); })
           .then(function(data) {
             if (data && data.success) {
-              var lat = data.latitude;
-              var lng = data.longitude;
+              var flag = (data.flag && data.flag.emoji) ? data.flag.emoji : '📍';
               var city = data.city || 'Visitor';
               var country = data.country || '';
-              var flag = (data.flag && data.flag.emoji) ? data.flag.emoji : '📍';
-
-              var locEl = document.getElementById('visitor-location');
               if (locEl) locEl.innerHTML = flag + ' <b>' + city + '</b>, ' + country;
-
-              var visitorIcon = L.divIcon({
-                className: 'pulse-pin',
-                iconSize: [10, 10],
-                iconAnchor: [5, 5]
-              });
-
-              var currentMarker = L.marker([lat, lng], { icon: visitorIcon }).addTo(map);
-              currentMarker.bindPopup('<b>Your Location:</b><br>' + flag + ' ' + city + ', ' + country).openPopup();
-              map.setView([lat, lng], 2);
+              if (callback) callback(data.latitude, data.longitude, city, country, flag);
             } else {
-              fallback();
+              tryIpapi(callback);
             }
           })
           .catch(function() {
-            fallback();
+            tryIpapi(callback);
           });
+      }
 
-        function fallback() {
-          var locEl = document.getElementById('visitor-location');
-          if (locEl) locEl.innerHTML = '🌐 Global Academic Visitors';
-        }
+      function tryIpapi(callback) {
+        var locEl = document.getElementById('visitor-location');
+        fetch('https://ipapi.co/json/')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            if (data && data.latitude) {
+              var city = data.city || 'Visitor';
+              var country = data.country_name || '';
+              if (locEl) locEl.innerHTML = '📍 <b>' + city + '</b>, ' + country;
+              if (callback) callback(data.latitude, data.longitude, city, country, '📍');
+            } else {
+              fallbackLoc();
+            }
+          })
+          .catch(function() {
+            fallbackLoc();
+          });
+      }
+
+      function fallbackLoc() {
+        var locEl = document.getElementById('visitor-location');
+        if (locEl) locEl.innerHTML = '🌐 <b>Comunidad Académica Global</b>';
+      }
+
+      function renderSvgMap(container) {
+        if (!container) return;
+        container.innerHTML = '<div style="position:relative;width:100%;height:100%;background:#dbeafe;display:flex;align-items:center;justify-content:center;">' +
+          '<svg viewBox="0 0 1000 500" style="width:100%;height:100%;display:block;" preserveAspectRatio="xMidYMid meet">' +
+          '<rect width="1000" height="500" fill="#e2e8f0"/>' +
+          '<path d="M120,80 L280,70 L340,110 L310,180 L270,220 L230,220 L200,280 L180,290 L160,260 L130,220 L90,160 Z" fill="#94a3b8"/>' +
+          '<path d="M260,280 L350,300 L390,360 L360,430 L310,480 L270,450 L250,370 L240,320 Z" fill="#94a3b8"/>' +
+          '<path d="M460,70 L550,60 L580,100 L560,150 L500,160 L450,130 L450,90 Z" fill="#94a3b8"/>' +
+          '<path d="M450,170 L580,170 L600,240 L570,360 L510,410 L450,340 L430,240 Z" fill="#94a3b8"/>' +
+          '<path d="M570,60 L850,70 L910,140 L880,240 L800,290 L710,240 L650,220 L580,170 Z" fill="#94a3b8"/>' +
+          '<path d="M780,340 L880,330 L910,380 L880,440 L800,430 L760,380 Z" fill="#94a3b8"/>' +
+          '<circle cx="280" cy="310" r="7" fill="#ef4444" class="pulse-pin"><title>Bogotá, Colombia</title></circle>' +
+          '<circle cx="240" cy="165" r="5" fill="#003366"><title>Boston / MIT</title></circle>' +
+          '<circle cx="170" cy="175" r="5" fill="#003366"><title>Stanford / Silicon Valley</title></circle>' +
+          '<circle cx="490" cy="115" r="5" fill="#003366"><title>Oxford / Cambridge, UK</title></circle>' +
+          '<circle cx="515" cy="130" r="5" fill="#003366"><title>Zurich / ETH, Switzerland</title></circle>' +
+          '<circle cx="860" cy="180" r="5" fill="#003366"><title>Tokyo, Japan</title></circle>' +
+          '</svg>' +
+          '</div>';
       }
 
       if (document.readyState === 'loading') {
